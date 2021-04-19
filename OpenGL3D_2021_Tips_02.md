@@ -1,0 +1,99 @@
+[OpenGL 3D 2021 Tips 第02回]
+
+# UnityアセットからOBJファイルを出力する
+
+## 1. Unityのアセットを使おう
+
+### 1.1 Unityアセットストアのライセンスについて
+
+Unityアセットストアにあるアセットには、Unity以外のアプリケーションでも利用可能とされているものがあります。例えば、標準的なUnityAssetStoreライセンスのものは利用可能です。
+
+フリー、有料を問わず多くのアセットがこのライセンスになっているので、かなり選択の幅が広がると思います。
+
+そこで、これらのアセットからOBJファイルを出力してOpenGLゲームで利用しよう、というのが本テキストの目的です。
+
+### 1.2 Scene OBJ Exporterアセット
+
+Unityには標準でOBJファイルを出力する機能がありません。ですから、まずはOBJファイルを出力する方法を追加する必要があります。
+
+OBJ出力機能を追加するにはいくつかの方法がありますが、今回はアセットストアにある「Scene OBJ Exporter(シーン・オブジェ・エクスポーター)」を使おうと思います。
+
+「Unity Asset Store」のサイトを開き、上部の検索ボックスに「scene obj exporter」と入力すると、次のようにアセットがひとつ見つかります。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_on_asset_store_0.png" width="75%" />
+</p>
+
+このアセットをクリックすると、Scene OBJ Exporterアセットのページが開きます。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_on_asset_store.png" width="75%" />
+</p>
+
+ページが開いたら、「マイアセットに追加する」をクリックしてアセットを追加してください。
+
+次に、新しいプロジェクトを作成してUnityエディタを起動します。そして、メニューから「Edit -> Package Manager」を選択してパッケージマネージャを起動してください。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_on_package_manager.png" width="75%" />
+</p>
+
+「Packages」の部分をクリックして「My Assets」を選択すると、リストに「Scene OBJ Exporter」が表示されると思います。「Scene OBJ Exporter」をクリックするとアセットの詳細が表示されるので、右下の「download」ボタンをクリックしてアセットをダウンロードしてください。
+
+ダウンロードが終わるとボタンが「Import」に変化します。「Import」ボタンを押すと「Import Unity Package」ウィンドウが開きます。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_on_import_window.png" width="40%" />
+</p>
+
+右下の「Import」ボタンを押してしばらく待つと、プロジェクトに「Scene OBJ Exporter」がインポート(追加)されます。インポートが完了したら、「File」メニューをクリックしてください。メニューの一番下に「Export」という項目が追加されていたら、「Scene OBJ Exporter」のインポートは成功です。
+
+表示されない場合は、新規プロジェクトの作成からやりなおしてみてください。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_menu_item.png" width="30%" />
+</p>
+
+Export項目が表示されていたら、OBJファイルにしたいアセットをプロジェクトにインポートしてください。
+
+### 1.3 OBJファイルと一緒にテクスチャを出力する
+
+Scene OBJ ExporterでOBJファイルを出力する時、アセットによってはテクスチャが出力されないことがあります。最初に以下の設定を行うことで、テクスチャも出力されるようになります。
+
+>1. アセットに含まれる全てのテクスチャを選択。
+>2. インスペクタの「Read/Write Enable」項目にチェックを入れる。
+>3. インスペクタの一番下の「Apply」ボタンをクリックして変更を反映。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_read_write_enable.png" width="75%" />
+</p>
+
+アセットによってはテクスチャフォルダがなかったり、テクスチャが複数のフォルダに分散していることもあるので注意してください。 必要なテクスチャは、アセットのサンプルデータを参照して調べるとよいでしょう。
+
+### 1.4 メッシュをOBJファイルとして出力する
+
+適当なアセットをインポートしたら、アセットに付属しているサンプルシーンを開くか、新しいシーンを作成してOBJにしたいメッシュを配置します。
+
+シーン内にある、OBJファイルにしたいメッシュを選択状態にして、メニューの「File -> Export -> Wavefront OBJ」をクリックします。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_select_mesh.png" width="75%" />
+</p>
+
+すると「Export OBJ」ウィンドウが開きます。以下のようにチェックボックスを設定してください。
+
+>1. Only Selected Objectsにチェックを入れる(チェックを入れないとシーン全体が出力される)。
+>2. Apply Positionのチェックを外す(チェックを入れるとシーンに配置した座標で出力される)。
+>3. Exportボタンをクリック。
+
+<p align="center">
+<img src="images/01_scene_obj_exporter_export_window.png" width="30%" />
+</p>
+
+Exportボタンをクリックすると、出力ファイル名を指定するウィンドウが開きます。好きな名前と場所を選択して出力してください。
+
+なお、OBJファイルと一緒に、マテリアル情報が書かれたMTLファイルが出力されます。OpenGLのテキストではMTLファイルには対応していないので、MTLファイルは削除してください。さらに、ノーマルマップにも対応していないので、ノーマルマップ画像ファイルも削除して構いません。
+
+あとは、OBJファイルとテクスチャをResフォルダに移動し、OpenGLのプロジェクトから読み込んで使うだけです。
+
+この手順を使えば、UnityのアセットをOBJファイルとして使えるようになります。
