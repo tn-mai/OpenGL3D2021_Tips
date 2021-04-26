@@ -97,3 +97,27 @@ Exportボタンをクリックすると、出力ファイル名を指定する�
 あとは、OBJファイルとテクスチャをResフォルダに移動し、OpenGLのプロジェクトから読み込んで使うだけです。
 
 この手順を使えば、UnityのアセットをOBJファイルとして使えるようになります。
+
+注意点として、`Skinned Mesh Renderer`には対応していません。ゲームオブジェクトに`Mesh Renderer`コンポーネントが設定されている必要があります。
+
+つまり、このアセットだけでは、スケルタル・アニメーションをOBJ出力することはできません。
+
+### 1.5 スケルタル・アニメーションをOBJファイルにする
+
+スケルタル・アニメーション付きのモデルからOBJファイルを作るには、モデルを`Mesh Renderer`モデルに変換する必要があります。
+
+以下のURLの最後にあるC#スクリプトをUnityプロジェクトに追加すると、`Skinned Mesh Renderer`の「︙」メニューに「Save Mesh As New Instance」という項目が追加されます。
+
+> https://forum.unity.com/threads/exporting-skinned-mesh-to-obj-with-blendshapes-applyed-skinnedmeshrenderer-bakemesh.219033/
+
+このスクリプトとScene OBJ Exporterを使ってOBJファイルを出力する手順は次のようになります。
+
+>1. OBJ出力したいモデルをシーンに配置。
+>2. OBJ出力したいアニメーションを、アニメーションコントローラーに設定。
+>3. ポーズ状態でシーンを実行。
+>4. ステップ実行で出力したいフレームまで進める。
+>5. OBJ出力したいモデルを選択し「Save Mesh As New Instance」を選択。
+>6. `Mesh Renderer`に変換したデータの出力先を聞かれるので、適当な場所に適当な名前をつけて保存。
+>7. 必要なモーションを全て出力するまで4～6を繰り返す。
+>8. 6で保存したファイルをUnityプロジェクトに追加し、シーンに配置。
+>9. 配置したモデルを選択し、Fileメニューから「Export OBJ」を選択。
