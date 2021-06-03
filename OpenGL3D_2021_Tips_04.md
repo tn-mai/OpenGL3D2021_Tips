@@ -53,7 +53,7 @@
  layout(location=7) uniform vec3 viewPosition;
 +
 +// 死亡エフェクトタイマー
-+layout(location=8) uniform float effectTimer;
++layout(location=11) uniform float effectTimer;
 
  // 円周率.
  const float PI = 3.14159265359;
@@ -112,7 +112,7 @@
 +{
 +  glGetError(); // エラー状態をリセット.
 +
-+  const GLint locTime = 8;
++  const GLint locTime = 11;
 +  glProgramUniform1f(fp, locTime, time);
 +  if (glGetError() != GL_NO_ERROR) {
 +    std::cerr << "[エラー]" << __func__ << ":エフェクト用タイマーの設定に失敗.\n";
@@ -230,7 +230,7 @@
    std::shared_ptr<Texture::Image2D> tex, const glm::vec3& pos) :
 -  name(name), primitive(prim), texture(tex), position(pos)
 +  name(name), primitive(prim), texture(tex),
-+  material(std::make_shared<Material>(GameData::Get().pipeline)),
++  material(std::make_shared<Material>(GameData::Get().pipeline3D)),
 +  position(pos)
  {
  }
