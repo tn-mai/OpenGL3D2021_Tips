@@ -53,7 +53,10 @@
      }
 +  }
 
-   if (type == FboType::Color) {
+-  if (type == FboType::ColorDepthStencil) {
++  if (type != FboType::Color) {
+     // 深度ステンシルテクスチャを作成.
+     texDepthStencil = std::make_shared<Texture::Image2D>(
 ```
 
 次に、カラーバッファの割り当てを変更します。深度ステンシルバッファを作成するプログラムの下にある、テクスチャをFBOに割り当てるプログラムを次のように変更してください。
@@ -63,6 +66,7 @@
        return;
      }
 
+     // フレームバッファオブジェクトを作成.
      glCreateFramebuffers(1, &fbo);
 +    if (type == FboType::Depth) {
 +      glNamedFramebufferDrawBuffer(fbo, GL_NONE);
@@ -133,14 +137,14 @@ void MainGameScene::Render(GLFWwindow* window) const
 
 ```diff
    // 環境光を設定する.
-   pipeline->SetAmbientLight(glm::vec3(0.1f, 0.125f, 0.15f)); // 昼
+   pipeline3D->SetAmbientLight(glm::vec3(0.1f, 0.125f, 0.15f)); // 昼
 
    // 平行光源を設定する
 -  const Shader::DirectionalLight directionalLight{
 -    glm::normalize(glm::vec4(3,-2,-2, 0)),
 -    glm::vec4(glm::vec3(1, 0.9f, 0.8f) * 0.5f, 1)
 -  };
-   pipeline->SetLight(directionalLight);
+   pipeline3D->SetLight(directionalLight);
 ```
 
 次に切り取った定義を`Render`メンバ関数の先頭に貼り付けてください。
@@ -439,7 +443,9 @@ void MainGameScene::Render(GLFWwindow* window) const
 +      0.0f, 0.0f, 0.5f, 0.0f,
 +      0.5f, 0.5f, 0.5f, 1.0f
 +    ) * matShadowVP;
-+    gamedata.pipeline->SetShadowMatrix(matShadowTexture);
++
++    // 影用の座標変換行列を通常描画用のシェーダーに設定.
++    gamedata.pipeline3D->SetShadowMatrix(matShadowTexture);
    }
 
    // 描画先をフレームバッファオブジェクトに変更.
