@@ -97,7 +97,7 @@
 変数名は`fboShadow`(エフビーオー・シャドウ)としました。次に`MainGameScene.cpp`を開き、`fbo`メンバ変数を初期化するプログラムの下に、次のプログラムを追加してください。
 
 ```diff
-   if (!fboMain || !fboMain->GetId()) {
+   if (!fbo || !fbo->GetId()) {
      return false;
    }
 +
