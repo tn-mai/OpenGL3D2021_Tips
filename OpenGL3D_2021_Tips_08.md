@@ -379,8 +379,8 @@ MVP行列を作成したら、`fbo`に書き込まれた画像から明るい成
 +    // ぼかした結果を拡大しながら加算合成する.
 +    glEnable(GL_BLEND);
 +    glBlendFunc(GL_ONE, GL_ONE);
-+    gamedata.pipelineSimple->Bind();
-+    gamedata.pipelineSimple->SetMVP(matMVP);
++    gamedata.pipeline2D->Bind();
++    gamedata.pipeline2D->SetMVP(matMVP);
 +    for (size_t n = std::size(fboBloom) - 1; n > 0; --n) {
 +      fboBloom[n - 1]->Bind();
 +      fboBloom[n]->BindColorTexture(0);
