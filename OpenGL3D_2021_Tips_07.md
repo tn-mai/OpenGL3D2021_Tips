@@ -327,8 +327,7 @@ void MainGameScene::Render(GLFWwindow* window) const
 
  // ユニフォーム変数
  layout(binding=0) uniform sampler2D texColor;
- layout(binding=1) uniform sampler2D texNormal;
- layout(binding=2) uniform sampler2D texMetallicSmoothness;
+ layout(binding=1) uniform sampler2D texMetallicSmoothness;
 +layout(binding=4) uniform sampler2D texShadow;
 
  // 平行光源
@@ -346,7 +345,7 @@ void MainGameScene::Render(GLFWwindow* window) const
 +  float shadow = float(textureProj(texShadow, inShadowPosition.xyw).r > z);
 
    vec3 viewVector = normalize(viewPosition - inPosition); // 視線ベクトル
-   vec3 worldNormal = computeNormal(viewVector);
+   vec3 worldNormal = normalize(inNormal);
    vec3 totalLightColor = ambientLight;
 ```
 
