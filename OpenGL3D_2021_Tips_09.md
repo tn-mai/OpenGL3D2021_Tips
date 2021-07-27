@@ -291,7 +291,7 @@ TBN行列を作成するには偏微分(へんびぶん)を計算する`dFdx`(�
 
    vec3 viewVector = normalize(viewPosition - inPosition); // 視線ベクトル
 -  vec3 worldNormal = normalize(inNormal);
-+  vec3 worldNormal = computeNormal(inNormal);
++  vec3 worldNormal = computeNormal(viewVector);
    vec3 totalLightColor = ambientLight;
    vec3 totalSpecularColor = vec3(0); // 全てのライトの鏡面反射の合計
 ```
