@@ -328,7 +328,7 @@ OpenGLもsRGB規格に対応しており、以下の2つの機能を実装して
 
 <div style="page-break-after: always"></div>
 
-## 2. フレームバファをsRGBに対応させる
+## 2. フレームバッファをsRGBに対応させる
 
 ### 2.1 ウィンドウヒントを指定する
 
